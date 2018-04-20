@@ -1,0 +1,20 @@
+    # EPEL/Remiをインストールする
+    - name: install epel remi 
+      yum: name={{item}}
+      with_items:
+        - http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+        - http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+    - name: install httpd
+      yum: name=httpd state=latest
+    - name: httpd started
+      service: name=httpd state=started enabled=yes
+    - name: install mysql
+      yum: name=mysql-server enablerepo=remi state=latest
+    - name: mysql started
+      service: name=mysqld state=started enabled=yes
+    - name: install php7
+    - yum: name={{item}} enablerepo=remi,remi-php70 state=latest
+      with_items:
+        - php
+        - php-mysqli
+        - php-pdo
